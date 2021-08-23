@@ -1,4 +1,5 @@
-const numerology = require('numerologic');
+// const numerology = require('numerologic');
+
 // var lifeWayNumber = numerology('01.28.1977').lifeWayNumber();
 // const zodiacSign = numerology('7.01.1981').zodiacSign();
 
@@ -27,17 +28,17 @@ const yearFormatter = (date) => {
 
 
 
-const getLifePathNum = (birthdate) => {
+const getLifePathNum = (birthdate)  => {
     let dateToNum = yearFormatter(birthdate).split('/').map((ele) => parseInt(ele))
     let num = dateToNum.reduce((a, b) => a + b)
      while(num >= 10) {
-         num = num.toString().split('').reduce((a,b) => parseInt(a) + parseInt(b)); 
+         num  = num.toString().split('').reduce((a,b) => parseInt(a) + parseInt(b)); 
      }
      return num
  }
     
 
-
+console.log(getLifePathNum('07/01/81'))
     
 module.exports = {
     getLifePathNum 
