@@ -25,8 +25,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   days: Object;
   date: any = 1;
   firstDay: number;
+  tbl: ElementRef;
 //we are going to use this in ngaafterview init
   @ViewChild('calendarBody', { static: false }) calendarBody: ElementRef;
+  @ViewChild('monthAndYear', { static: false }) monthAndYear: ElementRef;
   constructor(
     @Inject(DOCUMENT) private _document: Document,
     private renderer: Renderer2
@@ -55,7 +57,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     ];
     this.days = ['Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat'];
 
-    console.log('Heyyy', this.showCalendar(1, 2021));
+
+    // console.log('Heyyy', this.showCalendar(1, 2021));
   }
 
   ngAfterViewInit() {
@@ -64,13 +67,21 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     // const text = this.renderer.createText('two');
     // this.renderer.appendChild(d2, text);
     // this.renderer.appendChild(this.d1.nativeElement, d2);
-    console.log('Is this calendar body ref ', this.calendarBody)
+    //what do we want to do here
+    console.log('I am the Month Year Chump ', this.monthAndYear)
+    this.tbl =  this.calendarBody;
+    console.log('Boom ', this.tbl)
+    this.showCalendar(this.currentMonth, this.currentYear);
   }
 
   showCalendar(month: any, year: number) {
     let firstDay = new Date(year, month).getDay();
+    console.log(`Month: ${month}!, Year: ${month}!`, )
     let daysInMonth = 32 - new Date(year, month, 32).getDate();
-    console.log('Days in Month ', daysInMonth);
+    console.log('Days in Month! ', daysInMonth);
+
+    this.tbl.nativeElement.innerHTML = "";
+    //working on the month and year line
   }
 
   createCells(firstDay: number, daysInMonth: number) {
@@ -99,6 +110,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
           this.date++;
         }
       }
+      // let tbl = document.getElementById("calendar-body"); /
       // tbl.appendChild(row);
     }
   }
