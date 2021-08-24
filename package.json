@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~11.2.3",
     "@angular/router": "~11.2.3",
     "express": "^4.17.1",
+    "jsdom": "^17.0.0",
     "moment": "^2.29.1",
     "ngx-daterangepicker-material": "^5.0.1",
     "rxjs": "~6.6.0",
