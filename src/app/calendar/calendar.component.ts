@@ -1,22 +1,36 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  AfterViewInit,
+  Renderer2,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import * as moment from 'moment';
+
+// https://stackoverflow.com/questions/39126299/typescript-append-html-to-container-element-in-angular-2
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, AfterViewInit {
   currentDay: Date;
   currentYear: number;
   currentMonth: number;
   months: Object;
   days: Object;
-  date: number = 1;
+  date: any = 1;
   firstDay: number;
-
-  constructor(@Inject(DOCUMENT) private _document: Document) {
+//we are going to use this in ngaafterview init
+  @ViewChild('calendarBody', { static: false }) calendarBody: ElementRef;
+  constructor(
+    @Inject(DOCUMENT) private _document: Document,
+    private renderer: Renderer2
+  ) {
     // this.alwaysShowCalendars = true;
     const currentYear = new Date().getFullYear();
   }
@@ -39,11 +53,18 @@ export class CalendarComponent implements OnInit {
       'Nov',
       'Dec',
     ];
-    this.days = [
-      'Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat'
-    ]
+    this.days = ['Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat'];
 
     console.log('Heyyy', this.showCalendar(1, 2021));
+  }
+
+  ngAfterViewInit() {
+    //call this.showCalendar in here
+    // const d2 = this.renderer.createElement('div');
+    // const text = this.renderer.createText('two');
+    // this.renderer.appendChild(d2, text);
+    // this.renderer.appendChild(this.d1.nativeElement, d2);
+    console.log('Is this calendar body ref ', this.calendarBody)
   }
 
   showCalendar(month: any, year: number) {
@@ -62,9 +83,23 @@ export class CalendarComponent implements OnInit {
           cell.appendChild(cellText);
           row.appendChild(cell);
         } else if (this.date > daysInMonth) {
-
+          break;
+        } else {
+          const cell = this._document.createElement('td');
+          const cellText = document.createTextNode(this.date);
+          if (
+            this.date === this.currentDay.getDate() &&
+            this.currentYear === this.currentDay.getFullYear() &&
+            this.currentMonth === this.currentDay.getMonth()
+          ) {
+            cell.classList.add('bg-info');
+          } //
+          cell.appendChild(cellText);
+          row.appendChild(cell);
+          this.date++;
         }
       }
+      // tbl.appendChild(row);
     }
   }
 
