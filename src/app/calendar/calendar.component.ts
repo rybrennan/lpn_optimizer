@@ -26,6 +26,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   date: any = 1;
   firstDay: number;
   tbl: ElementRef;
+  calBodyInner: string = ''
+  monthAndYearInner: string;
   //we are going to use this in ngaafterview init
   @ViewChild('calendarBody', { static: false }) calendarBody: ElementRef;
   @ViewChild('monthAndYear', { static: false }) monthAndYear: ElementRef;
@@ -70,9 +72,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     // this.renderer.appendChild(this.d1.nativeElement, d2);
     //what do we want to do here
     this.tbl = this.calendarBody.nativeElement;
-    console.log('Boom ', this.tbl);
+    // console.log('Boom ', this.tbl);
     this.showCalendar(this.currentMonth, this.currentYear, this.tbl);
-    console.log('I am the Month Year Chump ', this.monthAndYear);
+    // console.log('I am the Month Year Chump ', this.monthAndYear);
   }
 
   showCalendar(month: any, year: number, calBodyRef: ElementRef) {
@@ -82,15 +84,16 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     console.log('Days in Month! ', daysInMonth);
 
     // clearing all previous cells
-    console.log('I am tbll!!!!!: ', calBodyRef)
-    calBodyRef.nativeElement.innerHTML = '';
+    // console.log('I am tbll!!!!!: ', ;
+    this.calBodyInner = '';
     // filing data about month and in the page via DOM.
-    this.monthAndYear.nativeElement.innerHTML = this.months[month] + ' ' + year;
+    // this.monthAndYear.nativeElement.innerHTML = this.months[month] + ' ' + year;
+    this.monthAndYearInner = this.months[month] + ' ' + year;
+    console.log('monthAndYearInner ', this.monthAndYearInner)
     this.selectYear.nativeElement.value = year;
     this.selectMonth.nativeElement.value = month;
 
-    
-    this.createCells(firstDay, daysInMonth, calBodyRef)
+    this.createCells(firstDay, daysInMonth, calBodyRef);
   }
 
   createCells(firstDay: number, daysInMonth: number, calBodyRef: ElementRef) {
@@ -121,7 +124,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       }
       // let tbl = document.getElementById("calendar-body"); /
       // tbl.appendChild(row);
-      this.renderer.appendChild(calBodyRef, row)
+      this.renderer.appendChild(calBodyRef, row);
     }
   }
 

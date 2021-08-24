@@ -19,7 +19,7 @@
   <body>
     <div class="container col-sm-4 col-md-7 col-lg-4 mt-5">
       <div class="card">
-        <h3 #monthAndYear class="card-header" id="monthAndYear"></h3>
+        <h3 #monthAndYear [innerHTML]="monthAndYearInner" class="card-header" id="monthAndYear"></h3>
         <table class="table table-bordered table-responsive-sm" id="calendar">
           <thead>
             <tr>
@@ -29,7 +29,7 @@
             </tr>
           </thead>
 
-          <tbody #calendarBody id="calendar-body"></tbody>
+          <tbody #calendarBody [innerHTML]="calBodyInner" id="calendar-body"></tbody>
         </table>
 
         <div class="form-inline">
